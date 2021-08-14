@@ -4,3 +4,6 @@
 [submodule "layers/Song/local/zotxt-emacs"]
 	path = layers/Song/local/zotxt-emacs
 	url = git@github.com:swang251/zotxt-emacs.git
+[submodule "layers/Song/local/org-roam"]
+	path = layers/Song/local/org-roam
+	url = git@github.com:swang251/org-roam.git

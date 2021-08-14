@@ -47,14 +47,7 @@
 	;; zotxt     ;; for connection to the Zotero server
 	;; (zotxt-emacs :location local)
 	(zotxt-emacs :location (recipe :fetcher local))
-	;; (org-roam :location (recipe :fetcher local))
-	;; (org-roam :location local)
-	;; (org-roam :location elpa)
-	;; (org-roam :location (recipe
-	;; 					 :fetcher github
-	;; 					 :repo "org-roam/org-roam.git"))
-	org-roam
-
+	(org-roam :location (recipe :fetcher local))
 	;; auctex
 	cdlatex   ;; fast input methods for LaTeX environments and math
 	org-fragtog
