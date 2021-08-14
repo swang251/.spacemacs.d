@@ -1,0 +1,6 @@
+[submodule "layers/Song/local/org-roam-ui"]
+	path = layers/Song/local/org-roam-ui
+	url = https://github.com/org-roam/org-roam-ui.git
+[submodule "layers/Song/local/zotxt-emacs"]
+	path = layers/Song/local/zotxt-emacs
+	url = git@github.com:swang251/zotxt-emacs.git

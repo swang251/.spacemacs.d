@@ -1,4 +1,6 @@
-;; -*- mode: emacs-lisp; lexical-binding: t -*-
+;; -*- 
+
+
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -9,8 +11,8 @@ This function should only modify configuration layer settings."
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
    ;; or `spacemacs'. (default 'spacemacs)
-   dotspacemacs-distribution 'spacemacs-base
-
+   ;; dotspacemacs-distribution 'spacemacs-base
+   dotspacemacs-distribution 'spacemacs
    ;; Lazy installation of layers (i.e. layers are installed only when a file
    ;; with a supported type is opened). Possible values are `all', `unused'
    ;; and `nil'. `unused' will lazy install only unused layers (i.e. layers
@@ -32,28 +34,44 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(html
+	 ;; ruby
+	 python
+	 ;; html
+	 ;; asciidoc
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
+     auto-completion
      ;; better-defaults
      emacs-lisp
      ;; git
      helm
      ;; lsp
-     ;; markdown
+     markdown
      multiple-cursors
-     ;; org
-     ;; (shell :variables
+	 ;; org
+     (org :variables
+		  org-enable-roam-support t
+		  ;; org-enable-roam-server t
+		  ;; org-enable-roam-protocol t
+		  )
+     ;; ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
-     treemacs)
+     treemacs
+
+     ;; Added by Song
+     Song
+     c-c++
+     semantic
+	 cmake
+	 neotree)
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -64,7 +82,15 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      reveal-in-osx-finder ;; for macos
+									  undo-tree
+									  cmake-font-lock
+									  auctex
+
+									  ;; necessary packages for org-roam and relative modules
+									  simple-httpd
+                                      )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -161,7 +187,7 @@ It should only modify the values of Spacemacs settings."
    ;; with `:variables' keyword (similar to layers). Check the editing styles
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
-   dotspacemacs-editing-style 'vim
+   dotspacemacs-editing-style 'hybrid
 
    ;; If non-nil show the version string in the Spacemacs buffer. It will
    ;; appear as (spacemacs version)@(emacs version)
@@ -186,8 +212,8 @@ It should only modify the values of Spacemacs settings."
    ;; pair of numbers, e.g. `(recents-by-project . (7 .  5))', where the first
    ;; number is the project limit and the second the limit on the recent files
    ;; within a project.
-   dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+   dotspacemacs-startup-lists '((recents . 8)
+                                (projects . 8))
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
@@ -221,7 +247,12 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(monokai
+                         ;;solarized-dark
+                         solarized-light
+                         leuven
+                         zenburn
+                         spacemacs-dark
                          spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -243,7 +274,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-default-font '("Source Code Pro"
                                :size 13.0
                                :weight normal
-                               :width normal)
+                               :width normal
+                               :powerline-scale 1.1)
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
@@ -267,7 +299,8 @@ It should only modify the values of Spacemacs settings."
    ;; (default "C-M-m" for terminal mode, "<M-return>" for GUI mode).
    ;; Thus M-RET should work as leader key in both GUI and terminal modes.
    ;; C-M-m also should work in terminal mode, but not in GUI mode.
-   dotspacemacs-major-mode-emacs-leader-key (if window-system "<M-return>" "C-M-m")
+   ;; dotspacemacs-major-mode-emacs-leader-key (if window-system "<M-return>" "C-M-m")
+   dotspacemacs-major-mode-emacs-leader-key "C-M-m" ;; solve the conflidtion in org-mode
 
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs `C-i', `TAB' and `C-m', `RET'.
@@ -399,7 +432,7 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
 
    ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
@@ -534,6 +567,11 @@ dump.")
 
 
 (defun dotspacemacs/user-config ()
+  (global-undo-tree-mode)
+  (evil-set-undo-system 'undo-tree)
+  (smartparens-global-mode t)
+  (add-to-list 'load-path "~/.spacemacs.d/layers/Song/local/org-roam-ui")
+  (load-library "org-roam-ui")
   "Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
 configuration.
@@ -553,16 +591,24 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(display-line-numbers-grow-only t)
+ '(display-line-numbers-width-start t)
+ '(evil-want-Y-yank-to-eol nil)
  '(global-display-line-numbers-mode t)
  '(global-hl-line-mode t)
- '(global-linum-mode nil)
+ '(global-page-break-lines-mode nil nil (page-break-lines))
  '(org-agenda-custom-commands
    '(("n" "Agenda and all TODOs"
-      ((agenda "" nil)
-       (alltodo "" nil))
-      nil)))
+	  ((agenda "" nil)
+	   (alltodo "" nil))
+	  nil)))
+ '(org-agenda-files
+   '("~/Dropbox/org/KnowledgeBase/ToLearn.org" "~/Dropbox/org/Publications/Dissertation/Dissertation.org" "~/Dropbox/org/KnowledgeBase/Emacs/ProgrammingMISC/Autoconf.org" "~/Dropbox/org/Publications/2021_ReedFatigue.org" "~/Dropbox/org/Projects/DiziProfLi/DiziProfLi.org" "~/Dropbox/org/Publications/Dissertation/Aeroacoustics.org" "~/Dropbox/org/KnowledgeBase/Algorithms/Algorithms.org" "~/Dropbox/org/KnowledgeBase/CMake/CMake-Tutorial.org" "~/Dropbox/org/KnowledgeBase/CMake/CMake-examples.org" "~/Dropbox/org/KnowledgeBase/CMake/CMake.org" "~/Dropbox/org/KnowledgeBase/Emacs/Emacs Q&A.org" "~/Dropbox/org/KnowledgeBase/Emacs/Emacs.org" "~/Dropbox/org/Projects/ActaJet/ActaJet.org" "~/Dropbox/org/Projects/ActaJet/ActajetBackground.org" "~/Dropbox/org/Projects/ActaJet/Progress.org" "~/Dropbox/org/Publications/Dissertation/FluidDynamics.org" "~/Dropbox/org/Publications/Dissertation/HotWireExp.org" "~/Dropbox/org/Publications/Dissertation/Mouthpiece.org" "~/Dropbox/org/Publications/Dissertation/SingleReedRef.org"))
+ '(org-download-method 'attach)
+ '(org-download-screenshot-method "screencapture -i %s")
  '(package-selected-packages
-   '(treemacs-evil yasnippet-snippets yaml-mode ws-butler writeroom-mode visual-fill-column winum web-mode volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-persp treemacs-icons-dired treemacs cfrs ht pfuture posframe toc-org tagedit symon symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor sphinx-doc spaceline-all-the-icons memoize all-the-icons spaceline powerline slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters quickrun pug-mode prettier-js popwin poetry transient pippel pipenv pyvenv persp-mode password-generator overseer org-superstar npm-mode nose nodejs-repl nameless multi-line shut-up json-navigator hierarchy importmagic epc ctable concurrent impatient-mode helm-xref helm-rtags helm-purpose window-purpose imenu-list helm-org helm-ls-git google-c-style flycheck-package package-lint flycheck flycheck-elsa evil-textobj-line evil-lion evil-goggles evil-collection annalist evil-cleverparens smartparens emr projectile paredit list-utils editorconfig drag-stuff dired-quick-sort devdocs cpp-auto-include company-ycmd ycmd pkg-info request-deferred request deferred web-completion-data company-rtags rtags company-reftex company-math math-symbol-lists company centered-cursor-mode blacken yasnippet s popup which-key reveal-in-osx-finder company-auctex auctex-latexmk auctex matlab-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot ox-reveal web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode yapfify pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic less-css-mode helm-css-scss haml-mode emmet-mode company-web disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet fuzzy company-statistics auto-yasnippet ac-ispell auto-complete mmm-mode markdown-toc markdown-mode gh-md paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async)))
+   '(org-roam-ui websocket org-roam-server magit-section emacsql-sqlite emacsql seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake minitest enh-ruby-mode chruby bundler inf-ruby zotxt-emacs zotxt lsp-python-ms lsp-pyright helm-cscope xcscope dap-mode lsp-treemacs bui lsp-mode org-download org-fragtog cdlatex counsel-css add-node-modules-path cmake-font-lock adoc-mode markup-faces helm-gtags ggtags counsel-gtags counsel swiper ivy treemacs-evil yasnippet-snippets yaml-mode ws-butler writeroom-mode visual-fill-column winum web-mode volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-persp treemacs-icons-dired treemacs cfrs ht pfuture posframe toc-org tagedit symon symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor sphinx-doc spaceline-all-the-icons memoize all-the-icons spaceline powerline slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters quickrun pug-mode prettier-js popwin poetry transient pippel pipenv pyvenv persp-mode password-generator overseer org-superstar npm-mode nose nodejs-repl nameless multi-line shut-up json-navigator hierarchy importmagic epc ctable concurrent impatient-mode helm-xref helm-rtags helm-purpose window-purpose imenu-list helm-org helm-ls-git google-c-style flycheck-package package-lint flycheck flycheck-elsa evil-textobj-line evil-lion evil-goggles evil-collection annalist evil-cleverparens smartparens emr projectile paredit list-utils editorconfig drag-stuff dired-quick-sort devdocs cpp-auto-include company-ycmd ycmd pkg-info request-deferred request deferred web-completion-data company-rtags rtags company-reftex company-math math-symbol-lists company centered-cursor-mode blacken yasnippet s popup which-key reveal-in-osx-finder company-auctex auctex-latexmk auctex matlab-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime htmlize gnuplot ox-reveal web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode yapfify pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic less-css-mode helm-css-scss haml-mode emmet-mode company-web disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet fuzzy company-statistics auto-yasnippet ac-ispell auto-complete mmm-mode markdown-toc markdown-mode gh-md paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async))
+ '(page-break-lines-modes nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
