@@ -34,7 +34,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(html
+   '(
+	 html
 	 ;; ruby
 	 python
 	 ;; html
@@ -87,7 +88,8 @@ This function should only modify configuration layer settings."
 									  undo-tree
 									  cmake-font-lock
 									  auctex
-
+									  matlab-mode
+									  rime
 									  ;; necessary packages for org-roam and relative modules
 									  simple-httpd
                                       )
@@ -247,7 +249,10 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(monokai
+   dotspacemacs-themes '(srcery
+						 gruber-darker
+						 afternoon
+						 monokai
                          ;;solarized-dark
                          solarized-light
                          leuven
@@ -272,7 +277,7 @@ It should only modify the values of Spacemacs settings."
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13.0
+                               :size 15.0
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -591,28 +596,128 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
+ '(company-quickhelp-color-background "#4F4F4F")
+ '(company-quickhelp-color-foreground "#DCDCCC")
+ '(compilation-message-face 'default)
+ '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-normal-cursor-color "#839496")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
+ '(custom-safe-themes
+   '("00445e6f15d31e9afaa23ed0d765850e9cd5e929be5e8e63b114a3346236c44c" "c5a81a42df109b02a9a68dfe0ed530080372c1a0bbcb374da77ee3a57e1be719" "57e3f215bef8784157991c4957965aa31bac935aca011b29d7d8e113a652b693" "d9646b131c4aa37f01f909fbdd5a9099389518eb68f25277ed19ba99adeb7279" "e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9" "aff12479ae941ea8e790abb1359c9bb21ab10acd15486e07e64e0e10d7fdab38" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(display-line-numbers-grow-only t)
  '(display-line-numbers-width-start t)
  '(evil-want-Y-yank-to-eol nil)
+ '(fci-rule-color "#383838")
  '(global-display-line-numbers-mode t)
  '(global-hl-line-mode t)
  '(global-page-break-lines-mode nil nil (page-break-lines))
+ '(highlight-changes-colors '("#d33682" "#6c71c4"))
+ '(highlight-parentheses-colors '("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900"))
+ '(highlight-symbol-colors
+   '("#3b6b40f432d7" "#07b9463d4d37" "#47a3341f358a" "#1d873c4056d5" "#2d87441c3362" "#43b7362e3199" "#061e418059d7"))
+ '(highlight-symbol-foreground-color "#93a1a1")
+ '(highlight-tail-colors
+   '(("#073642" . 0)
+	 ("#5b7300" . 20)
+	 ("#007d76" . 30)
+	 ("#0061a8" . 50)
+	 ("#866300" . 60)
+	 ("#992700" . 70)
+	 ("#a00559" . 85)
+	 ("#073642" . 100)))
+ '(hl-bg-colors
+   '("#866300" "#992700" "#a7020a" "#a00559" "#243e9b" "#0061a8" "#007d76" "#5b7300"))
+ '(hl-fg-colors
+   '("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36"))
+ '(hl-todo-keyword-faces
+   '(("TODO" . "#dc752f")
+	 ("NEXT" . "#dc752f")
+	 ("THEM" . "#2d9574")
+	 ("PROG" . "#4f97d7")
+	 ("OKAY" . "#4f97d7")
+	 ("DONT" . "#f2241f")
+	 ("FAIL" . "#f2241f")
+	 ("DONE" . "#86dc2f")
+	 ("NOTE" . "#b1951d")
+	 ("KLUDGE" . "#b1951d")
+	 ("HACK" . "#b1951d")
+	 ("TEMP" . "#b1951d")
+	 ("FIXME" . "#dc752f")
+	 ("XXX+" . "#dc752f")
+	 ("\\?\\?\\?+" . "#dc752f")))
+ '(lsp-ui-doc-border "#93a1a1")
+ '(magit-diff-use-overlays nil)
+ '(nrepl-message-colors
+   '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
  '(org-agenda-custom-commands
    '(("n" "Agenda and all TODOs"
 	  ((agenda "" nil)
 	   (alltodo "" nil))
 	  nil)))
  '(org-agenda-files
-   '("~/Dropbox/org/KnowledgeBase/ToLearn.org" "~/Dropbox/org/Publications/Dissertation/Dissertation.org" "~/Dropbox/org/KnowledgeBase/Emacs/ProgrammingMISC/Autoconf.org" "~/Dropbox/org/Publications/2021_ReedFatigue.org" "~/Dropbox/org/Projects/DiziProfLi/DiziProfLi.org" "~/Dropbox/org/Publications/Dissertation/Aeroacoustics.org" "~/Dropbox/org/KnowledgeBase/Algorithms/Algorithms.org" "~/Dropbox/org/KnowledgeBase/CMake/CMake-Tutorial.org" "~/Dropbox/org/KnowledgeBase/CMake/CMake-examples.org" "~/Dropbox/org/KnowledgeBase/CMake/CMake.org" "~/Dropbox/org/KnowledgeBase/Emacs/Emacs Q&A.org" "~/Dropbox/org/KnowledgeBase/Emacs/Emacs.org" "~/Dropbox/org/Projects/ActaJet/ActaJet.org" "~/Dropbox/org/Projects/ActaJet/ActajetBackground.org" "~/Dropbox/org/Projects/ActaJet/Progress.org" "~/Dropbox/org/Publications/Dissertation/FluidDynamics.org" "~/Dropbox/org/Publications/Dissertation/HotWireExp.org" "~/Dropbox/org/Publications/Dissertation/Mouthpiece.org" "~/Dropbox/org/Publications/Dissertation/SingleReedRef.org"))
+   '("~/Dropbox/org/KnowledgeBase/ToLearn.org" "~/Dropbox/org/Publications/Dissertation/Dissertation.org" "~/Dropbox/org/KnowledgeBase/Emacs/ProgrammingMISC/Autoconf.org" "~/Dropbox/org/Publications/2021_ReedFatigue.org" "~/Dropbox/org/Projects/DiziProfLi/DiziProfLi.org" "~/Dropbox/org/Publications/Dissertation/Aeroacoustics.org" "~/Dropbox/org/KnowledgeBase/CMake/CMake-Tutorial.org" "~/Dropbox/org/KnowledgeBase/CMake/CMake-examples.org" "~/Dropbox/org/KnowledgeBase/CMake/CMake.org" "~/Dropbox/org/KnowledgeBase/Emacs/Emacs Q&A.org" "~/Dropbox/org/KnowledgeBase/Emacs/Emacs.org" "~/Dropbox/org/Projects/ActaJet/ActaJet.org" "~/Dropbox/org/Projects/ActaJet/ActajetBackground.org" "~/Dropbox/org/Projects/ActaJet/Progress.org" "~/Dropbox/org/Publications/Dissertation/FluidDynamics.org" "~/Dropbox/org/Publications/Dissertation/HotWireExp.org" "~/Dropbox/org/Publications/Dissertation/Mouthpiece.org" "~/Dropbox/org/Publications/Dissertation/SingleReedRef.org"))
+ '(org-attach-archive-delete nil)
+ '(org-attach-dir-relative t)
+ '(org-attach-preferred-new-method 'dir)
+ '(org-attach-use-inheritance t)
  '(org-download-method 'attach)
  '(org-download-screenshot-method "screencapture -i %s")
+ '(org-fontify-quote-and-verse-blocks t)
+ '(org-preview-latex-default-process 'dvipng)
  '(package-selected-packages
-   '(org-roam-ui websocket org-roam-server magit-section emacsql-sqlite emacsql seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake minitest enh-ruby-mode chruby bundler inf-ruby zotxt-emacs zotxt lsp-python-ms lsp-pyright helm-cscope xcscope dap-mode lsp-treemacs bui lsp-mode org-download org-fragtog cdlatex counsel-css add-node-modules-path cmake-font-lock adoc-mode markup-faces helm-gtags ggtags counsel-gtags counsel swiper ivy treemacs-evil yasnippet-snippets yaml-mode ws-butler writeroom-mode visual-fill-column winum web-mode volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-persp treemacs-icons-dired treemacs cfrs ht pfuture posframe toc-org tagedit symon symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor sphinx-doc spaceline-all-the-icons memoize all-the-icons spaceline powerline slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters quickrun pug-mode prettier-js popwin poetry transient pippel pipenv pyvenv persp-mode password-generator overseer org-superstar npm-mode nose nodejs-repl nameless multi-line shut-up json-navigator hierarchy importmagic epc ctable concurrent impatient-mode helm-xref helm-rtags helm-purpose window-purpose imenu-list helm-org helm-ls-git google-c-style flycheck-package package-lint flycheck flycheck-elsa evil-textobj-line evil-lion evil-goggles evil-collection annalist evil-cleverparens smartparens emr projectile paredit list-utils editorconfig drag-stuff dired-quick-sort devdocs cpp-auto-include company-ycmd ycmd pkg-info request-deferred request deferred web-completion-data company-rtags rtags company-reftex company-math math-symbol-lists company centered-cursor-mode blacken yasnippet s popup which-key reveal-in-osx-finder company-auctex auctex-latexmk auctex matlab-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime htmlize gnuplot ox-reveal web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode yapfify pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic less-css-mode helm-css-scss haml-mode emmet-mode company-web disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet fuzzy company-statistics auto-yasnippet ac-ispell auto-complete mmm-mode markdown-toc markdown-mode gh-md paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async))
- '(page-break-lines-modes nil))
+   '(rime sis srcery-theme evil-easymotion font-lock+ gruber-darker-theme afternoon-theme org-roam-ui websocket org-roam-server magit-section emacsql-sqlite emacsql seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake minitest enh-ruby-mode chruby bundler inf-ruby zotxt-emacs zotxt lsp-python-ms lsp-pyright helm-cscope xcscope dap-mode lsp-treemacs bui lsp-mode org-download org-fragtog cdlatex counsel-css add-node-modules-path cmake-font-lock adoc-mode markup-faces helm-gtags ggtags counsel-gtags counsel swiper ivy treemacs-evil yasnippet-snippets yaml-mode ws-butler writeroom-mode visual-fill-column winum web-mode volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-persp treemacs-icons-dired treemacs cfrs ht pfuture posframe toc-org tagedit symon symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor sphinx-doc spaceline-all-the-icons memoize all-the-icons spaceline powerline slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters quickrun pug-mode prettier-js popwin poetry transient pippel pipenv pyvenv persp-mode password-generator overseer org-superstar npm-mode nose nodejs-repl nameless multi-line shut-up json-navigator hierarchy importmagic epc ctable concurrent impatient-mode helm-xref helm-rtags helm-purpose window-purpose imenu-list helm-org helm-ls-git google-c-style flycheck-package package-lint flycheck flycheck-elsa evil-textobj-line evil-lion evil-goggles evil-collection annalist evil-cleverparens smartparens emr projectile paredit list-utils editorconfig drag-stuff dired-quick-sort devdocs cpp-auto-include company-ycmd ycmd pkg-info request-deferred request deferred web-completion-data company-rtags rtags company-reftex company-math math-symbol-lists company centered-cursor-mode blacken yasnippet s popup which-key reveal-in-osx-finder company-auctex auctex-latexmk auctex matlab-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime htmlize gnuplot ox-reveal web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode yapfify pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic less-css-mode helm-css-scss haml-mode emmet-mode company-web disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet fuzzy company-statistics auto-yasnippet ac-ispell auto-complete mmm-mode markdown-toc markdown-mode gh-md paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async))
+ '(page-break-lines-modes nil)
+ '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
+ '(pos-tip-background-color "#073642")
+ '(pos-tip-foreground-color "#93a1a1")
+ '(recentf-max-saved-items 50)
+ '(recentf-mode t)
+ '(recentf-save-file "~/.emacs.d/.cache/recentf")
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(term-default-bg-color "#002b36")
+ '(term-default-fg-color "#839496")
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-background-mode nil)
+ '(vc-annotate-color-map
+   '((20 . "#BC8383")
+	 (40 . "#CC9393")
+	 (60 . "#DFAF8F")
+	 (80 . "#D0BF8F")
+	 (100 . "#E0CF9F")
+	 (120 . "#F0DFAF")
+	 (140 . "#5F7F5F")
+	 (160 . "#7F9F7F")
+	 (180 . "#8FB28F")
+	 (200 . "#9FC59F")
+	 (220 . "#AFD8AF")
+	 (240 . "#BFEBBF")
+	 (260 . "#93E0E3")
+	 (280 . "#6CA0A3")
+	 (300 . "#7CB8BB")
+	 (320 . "#8CD0D3")
+	 (340 . "#94BFF3")
+	 (360 . "#DC8CC3")))
+ '(vc-annotate-very-old-color "#DC8CC3")
+ '(weechat-color-list
+   '(unspecified "#002b36" "#073642" "#a7020a" "#dc322f" "#5b7300" "#859900" "#866300" "#b58900" "#0061a8" "#268bd2" "#a00559" "#d33682" "#007d76" "#2aa198" "#839496" "#657b83"))
+ '(xterm-color-names
+   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
+ '(xterm-color-names-bright
+   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(org-block ((t (:inherit shadow :extend t :background "gray16" :foreground "white"))))
+ '(org-level-1 ((t (:weight bold :height 1.3))))
+ '(org-level-2 ((t (:weight bold :height 1.2))))
+ '(org-level-3 ((t (:extend nil :foreground "green yellow" :weight normal :height 1.1))))
+ '(org-level-4 ((t (:extend nil :foreground "turquoise1" :weight normal))))
+ '(org-quote ((t (:inherit org-block :background "gray25")))))
 )

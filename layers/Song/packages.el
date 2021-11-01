@@ -62,7 +62,11 @@
 	;; 							:branch "main"
 	;; 							:files ("*.el" "out") ))
 	websocket
-    )
+
+	;; Matlab support
+	matlab-mode
+	rime
+	)
   "The list of Lisp packages required by the Song layer.
 
 Each entry is either:
@@ -112,9 +116,11 @@ Each entry is either:
 (defun Song/post-init-org ()
   (use-package org
 	:defer nil
+	:bind (:map spacemacs-org-mode-map-root-map ("M-RET" . nil))
 	:init
 	:config
-	(plist-put org-format-latex-options :scale 1.5)
+	;; (plist-put org-format-latex-options :scale 1.0)
+	;; (org-defkey org-mode-map [(meta RET)] 'org-meta-return)
 	))
 
 ;; (defun Song/init-auctex ()
@@ -164,7 +170,8 @@ Each entry is either:
 	:config
     (org-roam-db-autosync-mode)
 	;; If using org-roam-protocol
-    (require 'org-roam-protocol)))
+    ;; (require 'org-roam-protocol)
+	))
 
 ;; (defun Song/init-org-roam-ui ()
 ;;   (use-package org-roam-ui
@@ -179,4 +186,25 @@ Each entry is either:
 (defun Song/init-websocket ()
   (use-package websocket
 	:after org-roam)
+  )
+
+
+(defun Song/init-matlab-mode()
+  (use-package matlab
+	:ensure matlab-mode
+	:config
+;;	  (autoload 'matlab-mode "matlab" "Matlab Editing Mode" t
+	  (add-to-list
+	   'auto-mode-alist
+	   '("\\.m$" . matlab-mode))
+	  (setq matlab-indent-function t)
+	  (setq matlab-shell-command "/Applications/MATLAB_R2021a.app/bin/matlab")
+	  (setq matlab-shell-command-switches (list "-nodesktop"))
+   ))
+(defun Song/init-rime ()
+  (use-package rime
+	:custom
+	(rime-librime-root "~/.emacs.d/librime/dist")
+	(rime-emacs-module-header-root "/usr/local/Cellar/emacs-mac/emacs-27.2-mac-8.2/include")
+	(default-input-method "rime"))
   )
