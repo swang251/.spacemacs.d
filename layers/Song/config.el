@@ -42,6 +42,7 @@
         ("=" (:background "black" :foreground "yellow"))
         ("+" (:strike-through t))
         ))
+  (setq org-fontify-quote-and-verse-blocks t) ;; necessary for setting quote block background
   ;; for archive
 ;;  (require 'org-archive-subtree-hierarchical)
 ;;  (setq org-archive-default-command 'org-archive-subtree-hierarchical)
