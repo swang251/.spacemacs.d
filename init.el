@@ -437,7 +437,8 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers '(:t
+							   :disabled-for-modes org-mode)
 
    ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
@@ -577,6 +578,7 @@ dump.")
   (smartparens-global-mode t)
   (add-to-list 'load-path "~/.spacemacs.d/layers/Song/local/org-roam-ui")
   (load-library "org-roam-ui")
+  
   "Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
 configuration.
@@ -613,9 +615,6 @@ This function is called at the very end of Spacemacs initialization."
  '(display-line-numbers-width-start t)
  '(evil-want-Y-yank-to-eol nil)
  '(fci-rule-color "#383838")
- '(global-display-line-numbers-mode t)
- '(global-hl-line-mode t)
- '(global-page-break-lines-mode nil nil (page-break-lines))
  '(highlight-changes-colors '("#d33682" "#6c71c4"))
  '(highlight-parentheses-colors '("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900"))
  '(highlight-symbol-colors
