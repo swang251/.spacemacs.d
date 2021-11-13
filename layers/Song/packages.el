@@ -173,11 +173,12 @@ Each entry is either:
 	(evil-define-key 'motion 'evil-org-mode (kbd "0") 'evil-org-beginning-of-line)
     (org-roam-db-autosync-mode)
 	(global-page-break-lines-mode -1)
-	(add-hook 'org-mode-hook 'display-line-numbers-mode nil t)
-	(defun diable-display-linum()
-      (remove-hook 'org-mode-hook 'display-line-numbers-mode))
-	(add-hook 'org-roam-mode-hook 'diable-display-linum)
-	;; If using org-roam-protocol
+	
+	(add-hook 'org-mode-hook 'display-line-numbers-mode)
+	(advice-add 'org-roam-buffer-persistent-redisplay :before (lambda ()
+																(remove-hook 'org-mode-hook 'display-line-numbers-mode)))
+	(advice-add 'org-roam-buffer-persistent-redisplay :after (lambda ()
+															   (add-hook 'org-mode-hook 'display-line-numbers-mode)))
     ;; (require 'org-roam-protocol)
 	))
 
