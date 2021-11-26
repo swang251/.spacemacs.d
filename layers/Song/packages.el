@@ -209,7 +209,10 @@ Each entry is either:
 	  (setq matlab-indent-function t)
 	  (setq matlab-shell-command "/Applications/MATLAB_R2021a.app/bin/matlab")
 	  (setq matlab-shell-command-switches (list "-nodesktop"))
+	  (add-hook 'matlab-mode-hook 'matlab-toggle-show-mlint-warnings)
+	  (add-hook 'matlab-mode-hook (lambda () (local-set-key (kbd "TAB") #'matlab-complete-symbol) ))
    ))
+
 (defun Song/init-rime ()
   (use-package rime
 	:custom
